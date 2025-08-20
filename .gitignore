@@ -4,3 +4,4 @@ topics
 .venv
 data
 node_modules
+.vercel
