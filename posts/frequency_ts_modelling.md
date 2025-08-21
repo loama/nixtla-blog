@@ -4,9 +4,9 @@ description: Discover how to decompose your time series in multiple components w
 image: /images/fourier_modelling/main_picture.svg
 categories: ["Time Series Forecasting"]
 tags:
+  - TimeGPT
   - Fourier Transform
   - frequency analysis
-  - TimeGPT
   - signal decomposition
 ---
 

@@ -4,9 +4,10 @@ description: Discover how to find the minimum detectable anomaly in absence of a
 image: /images/anomaly_detection_performance_evaluation/main_image.svg
 categories: ["Anomaly Detection"]
 tags:
+  - TimeGPT
+  - anomaly detection
   - synthetic anomalies
   - performance evaluation
-  - TimeGPT
   - minimum detectable anomaly
 ---
 

@@ -4,7 +4,7 @@ description: Discover how to detect anomalies using Optimal Baseline Subtraction
 image: /images/optimal_baseline/main_image.svg
 categories: ["Anomaly Detection"]
 tags:
-  ["optimal baseline subtraction", "OBS", "anomaly detection", "statsforecast"]
+  ["anomaly detection", "optimal baseline subtraction", "OBS", "statsforecast"]
 ---
 
 # Simple Anomaly Detection in Time Series via Optimal Baseline Subtraction (OBS)

@@ -5,8 +5,8 @@ image: "/images/anomaly_detection/anomaly_detection.svg"
 categories: ["Anomaly Detection"]
 tags:
   - TimeGPT
-  - Python
   - anomaly detection
+  - Python
   - confidence intervals
 ---
 

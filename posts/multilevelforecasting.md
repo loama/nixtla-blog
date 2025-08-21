@@ -4,9 +4,9 @@ description: Discover how to decompose your time series in multiple components w
 image: /images/MultiLevelForecasting/main_image.svg
 categories: ["Time Series Forecasting"]
 tags:
-  - multi-horizon forecasting
   - TimeGPT
   - AutoARIMA
+  - multi-horizon forecasting
   - polynomial regression
 ---
 
