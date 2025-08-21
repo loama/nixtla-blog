@@ -1,8 +1,6 @@
 ---
 title: "Anomaly Detection in Time Series with TimeGPT and Python"
-description: |
-  Discover how to use TimeGPT for scalable, accurate anomaly detection in Python. 
-  Includes real-world time series, exogenous variables, and adjustable confidence levels.
+description: "Discover how to use TimeGPT for scalable, accurate anomaly detection in Python Includes real-world time series, exogenous variables, and adjustable confidence levels."
 image: "/images/anomaly_detection/anomaly_detection.svg"
 categories: ["Anomaly Detection"]
 tags: ["TimeGPT", "Python", "anomaly detection", "confidence intervals"]
