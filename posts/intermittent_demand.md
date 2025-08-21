@@ -1,20 +1,19 @@
 ---
-title: 'Understanding Intermittent Demand'
+title: "Understanding Intermittent Demand"
 description: |
   Learn how to forecast intermittent demand using Python and Nixtla's TimeGPT.
   This step-by-step guide covers handling sparse time series, fine-tuning,
   and using exogenous variables to improve accuracy.
-image: '/images/blog/intermittent_demand/intermittent_demand.svg'
+image: "/images/intermittent_demand/intermittent_demand.svg"
 categories: ["Time Series Forecasting"]
 tags: ["TimeGPT", "intermittent demand", "sparse data", "fine-tuning"]
-
 ---
 
 # Intermittent Demand Forecasting in Python with Nixtla's TimeGPT
 
 Intermittent demand forecasting poses significant challenges for data scientists, especially when dealing with time series that contain numerous zero values.
 
-![](/images/blog/intermittent_demand/intermittent_demand_spikes.svg)
+![](/images/intermittent_demand/intermittent_demand_spikes.svg)
 
 Traditional forecasting models often struggle with such sparse data, leading to inaccurate predictions. Nixtla's [TimeGPT](https://www.nixtla.io/docs/intro) offers a robust solution to this problem by effectively handling intermittent demand scenarios.
 
@@ -32,7 +31,7 @@ TimeGPT is a time series [forecasting](https://www.nixtla.io/docs/capabilities-f
 
 To begin forecasting with TimeGPT, we first need to set up our environment by importing necessary libraries and initializing the [Nixtla client](https://dashboard.nixtla.io/sign_in).
 
-```python
+````python
 import time
 import pandas as pd
 import numpy as np
@@ -56,16 +55,15 @@ sales_data = pd.read_csv(
 )
 sales_data["ds"] = pd.to_datetime(sales_data["ds"])
 sales_data.head()
-```
+````
 
-| unique_id   | ds                  | y    | sell_price | event_type_Cultural | event_type_National | event_type_Religious | event_type_Sporting |
-| ----------- | ------------------- | ---- | ---------- | ------------------- | ------------------- | -------------------- | ------------------- |
-| FOODS_1_001 | 2011-01-29 00:00:00 | 3    | 2.0        | 0                   | 0                   | 0                    | 0                   |
-| FOODS_1_001 | 2011-01-30 00:00:00 | 0    | 2.0        | 0                   | 0                   | 0                    | 0                   |
-| FOODS_1_001 | 2011-01-31 00:00:00 | 0    | 2.0        | 0                   | 0                   | 0                    | 0                   |
-| FOODS_1_001 | 2011-02-01 00:00:00 | 1    | 2.0        | 0                   | 0                   | 0                    | 0                   |
-| FOODS_1_001 | 2011-02-02 00:00:00 | 4    | 2.0        | 0                   | 0                   | 0                    | 0                   |
-
+| unique_id   | ds                  | y   | sell_price | event_type_Cultural | event_type_National | event_type_Religious | event_type_Sporting |
+| ----------- | ------------------- | --- | ---------- | ------------------- | ------------------- | -------------------- | ------------------- |
+| FOODS_1_001 | 2011-01-29 00:00:00 | 3   | 2.0        | 0                   | 0                   | 0                    | 0                   |
+| FOODS_1_001 | 2011-01-30 00:00:00 | 0   | 2.0        | 0                   | 0                   | 0                    | 0                   |
+| FOODS_1_001 | 2011-01-31 00:00:00 | 0   | 2.0        | 0                   | 0                   | 0                    | 0                   |
+| FOODS_1_001 | 2011-02-01 00:00:00 | 1   | 2.0        | 0                   | 0                   | 0                    | 0                   |
+| FOODS_1_001 | 2011-02-02 00:00:00 | 4   | 2.0        | 0                   | 0                   | 0                    | 0                   |
 
 The dataset contains the following columns:
 
@@ -86,7 +84,7 @@ To understand the demand patterns, we plot the time series data.
   )
 ```
 
-![](/images/blog/intermittent_demand/sales_plot.svg)
+![](/images/intermittent_demand/sales_plot.svg)
 
 The plot reveals the intermittent nature of the demand, with many periods showing zero sales.
 
@@ -140,7 +138,7 @@ ax.legend(handles, labels)
 ax
 ```
 
-![](/images/blog/intermittent_demand/compared_plot.svg)
+![](/images/intermittent_demand/compared_plot.svg)
 
 The plot shows a clear distinction between the original and log-transformed sales series for FOODS_1_001. The original data has sharp peaks and frequent zero values, indicating highly volatile demand.
 
@@ -203,7 +201,6 @@ base_forecast.head()
 | FOODS_1_001 | 2016-05-25 00:00:00 | 0.383807 | 1.420369      | -0.208830     |
 | FOODS_1_001 | 2016-05-26 00:00:00 | 0.393173 | 1.350957      | -0.174408     |
 | FOODS_1_001 | 2016-05-27 00:00:00 | 0.416641 | 1.084891      | -0.037422     |
-
 
 To assess the accuracy of our forecasts, we define utility functions to merge the forecast with real observations and compute the mean MAE:
 
@@ -296,7 +293,6 @@ futr_exog_data.head()
 | 1944 | FOODS_1_001 | 2016-05-26 00:00:00 | 0                   | 0                   | 0                    | 0                   |
 | 1945 | FOODS_1_001 | 2016-05-27 00:00:00 | 0                   | 0                   | 0                    | 0                   |
 
-
 We can incorporate these exogenous variables into the forecast by passing them as `X_df` to the `forecast()` method:
 
 ```python
@@ -352,7 +348,6 @@ mae_table
 | Base TimeGPT           | 0.5140717206 |
 | Fine-Tuned TimeGPT     | 0.4925758924 |
 | TimeGPT with Exogenous | 0.4870164269 |
-
 
 ## Conclusion
 

@@ -1,38 +1,37 @@
 ---
-title: Savitzky Golay Filtering for Time Series Denoising 
+title: Savitzky Golay Filtering for Time Series Denoising
 description: Denoise your time series with Polynomial Smoothing using Saviztky-Goaly filter
-image: /images/blog/Polynomial_Filtering/Noise_Definition.svg
+image: /images/Polynomial_Filtering/Noise_Definition.svg
 ---
 
-# Savitzky–Golay Filtering for Time Series Denoising 
+# Savitzky–Golay Filtering for Time Series Denoising
 
-Imagine listening to a beautiful melody of a violin in the comfort of your home. You are there, relaxed, with your hot tea and you are listening to every frequency, every detail and every harmonization of that beautiful sound. 
+Imagine listening to a beautiful melody of a violin in the comfort of your home. You are there, relaxed, with your hot tea and you are listening to every frequency, every detail and every harmonization of that beautiful sound.
 
 Now, imagine trying to hear the same exact violin player playing the same exact melody, but in the middle of New York City. The sound is buried under car horns, chatter, and the hum of engines. The melody is the same, but the output is completely different.
 
 Real-world time series usually reflect the second scenario: the signal we care about is almost always tangled with noise, measurement errors, and unexpected fluctuations.
 
-More rigorously, data scientists view time series as the combination of two components: 
+More rigorously, data scientists view time series as the combination of two components:
+
 1. **The underlying signal**: This represents the true behavior and essence of the process we aim to study. Examples include temperature trends, stock movements, or system responses (or, in the example above, the violin).
-2. **The noise**: This is the unwanted variation introduced by external disturbances, sensor inaccuracies, or environmental factors (or, in the example above, the city and its sounds). 
+2. **The noise**: This is the unwanted variation introduced by external disturbances, sensor inaccuracies, or environmental factors (or, in the example above, the city and its sounds).
 
-![png](/images/blog/Polynomial_Filtering/Noise_Definition.svg)
+![png](/images/Polynomial_Filtering/Noise_Definition.svg)
 
-> Note: In this article, the term *"time series"* and *"signal"* will be used interchangeably. 
+> Note: In this article, the term _"time series"_ and _"signal"_ will be used interchangeably.
 
-
-It is important to notice that, in real world application, we don't have the **underlying signal**, but we are always dealing with the **measured signal**, where **noise is always present**. For example, in the example above, we cannot perfectly extract the violin from our microphone in the city, because the violin and the city are both recorded by our microphone. 
+It is important to notice that, in real world application, we don't have the **underlying signal**, but we are always dealing with the **measured signal**, where **noise is always present**. For example, in the example above, we cannot perfectly extract the violin from our microphone in the city, because the violin and the city are both recorded by our microphone.
 
 In general, we have three different scenarios:
 
-
-1. **The noise is almost negligible with respect to the underlying signal.**  In this case, the observed time series closely follows the true process, and minimal preprocessing (or no preprocessing at all) is required.
-2. **The noise is smaller than the signal.** In this case, the noise interferes with the signal's structure, and some preprocessing is needed. 
+1. **The noise is almost negligible with respect to the underlying signal.** In this case, the observed time series closely follows the true process, and minimal preprocessing (or no preprocessing at all) is required.
+2. **The noise is smaller than the signal.** In this case, the noise interferes with the signal's structure, and some preprocessing is needed.
 3. **The noise dominates the signal.** In this case, there is nothing we can do: the data are unusable.
 
 In the figure below, the lime line represents low noise, cyan represents moderate noise, and blue represents high noise
 
-![png](/images/blog/Polynomial_Filtering/Noise_Scenarios.svg)
+![png](/images/Polynomial_Filtering/Noise_Scenarios.svg)
 
 Even when the noise is smaller than the source signal (cyan scenario), the noise can still disturb further analysis. For example:
 
@@ -42,52 +41,52 @@ Even when the noise is smaller than the source signal (cyan scenario), the noise
 
 3. **Noise can degrade classification or segmentation accuracy**. In tasks such as fault classification or activity recognition, noisy inputs can blur the boundaries between categories, reducing model reliability.
 
-For these reasons, it is important to run **denoising** (also known as **smoothing** or **filtering**) algorithms that aim to reduce the amount of noise present in our time series. 
+For these reasons, it is important to run **denoising** (also known as **smoothing** or **filtering**) algorithms that aim to reduce the amount of noise present in our time series.
 
 While it is impossible to retrieve the perfect underlying signal, these algorithms reduce the gap between the measured signal and the underlying one, outputting a more clean and less noisy time series.
 
-There are multiple ways to denoise our time series. The approach that will be explored in this blog post is the Polynomial Filtering, also known as **Savitzky-Golay Filtering**. 
+There are multiple ways to denoise our time series. The approach that will be explored in this blog post is the Polynomial Filtering, also known as **Savitzky-Golay Filtering**.
 
 The steps of the Savitzky-Golay filter are the following:
 
 1. **Define a window of fixed length:**
-Choose an odd number of data points (e.g., 5, 7, 9...) to form the smoothing window that slides over the signal. This determines the local neighborhood around each point.
+   Choose an odd number of data points (e.g., 5, 7, 9...) to form the smoothing window that slides over the signal. This determines the local neighborhood around each point.
 
 2. **Choose the polynomial degree:**
-Decide the degree of the polynomial (e.g., 2 or 3) that will be fit to the data within each window. A higher-degree polynomial captures more curvature but risks overfitting.
+   Decide the degree of the polynomial (e.g., 2 or 3) that will be fit to the data within each window. A higher-degree polynomial captures more curvature but risks overfitting.
 
 3. **Fit the polynomial locally:**
-For each position of the window, fit the chosen polynomial to the data points in the window using least squares regression.
+   For each position of the window, fit the chosen polynomial to the data points in the window using least squares regression.
 
 4. **Evaluate the polynomial at the center of the window:**
-Use the fitted polynomial to estimate the smoothed value at the central point of the window.
+   Use the fitted polynomial to estimate the smoothed value at the central point of the window.
 
 5. **Slide the window across the signal:**
-Repeat the process for each point in the signal by moving the window,generating a smoothed signal.
+   Repeat the process for each point in the signal by moving the window,generating a smoothed signal.
 
 Here is a visual summary of the workflow:
 
-![png](/images/blog/Polynomial_Filtering/Saviztky_Golay_Workflow.svg)
+![png](/images/Polynomial_Filtering/Saviztky_Golay_Workflow.svg)
 
-The implementation and results of this method will be shown in the next chapter, while in the last chapter, we will apply a forecasting task on the Savitzky-Golay cleaned time series, displaying the power of the denoising algorithm in a real world problem scenario. 
+The implementation and results of this method will be shown in the next chapter, while in the last chapter, we will apply a forecasting task on the Savitzky-Golay cleaned time series, displaying the power of the denoising algorithm in a real world problem scenario.
 
 ## Savitzky-Golay Approach
 
 ### Libraries and Setup
 
-To have a controlled experiment, we will build our own time series. This will allow us to inject the wanted level of noise and measure the quality of our denoising algorithm. For this reason, the time series will be synthetically generated with our code. 
+To have a controlled experiment, we will build our own time series. This will allow us to inject the wanted level of noise and measure the quality of our denoising algorithm. For this reason, the time series will be synthetically generated with our code.
 
 For this blog post, we will need the following libraries:
 
 ```python
-import numpy as np 
+import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
 ```
 
 ### Measured Signal and Noise Injection
 
-Let's create our "underlying signal". This signal represents the true behavior and essence of the process we aim to study. 
+Let's create our "underlying signal". This signal represents the true behavior and essence of the process we aim to study.
 
 We are assuming that the underlying signal has a given analytical definition. This is not far from reality, where the essence of a process is described by an analytical function. Examples include:
 
@@ -97,10 +96,9 @@ We are assuming that the underlying signal has a given analytical definition. Th
 
 For this blogpost, we will use the following analytical expression:
 
-![png](/images/blog/Polynomial_Filtering/sine_wave.png)
+![png](/images/Polynomial_Filtering/sine_wave.png)
 
-With x (time) defined in the 0-10 range, and y defined as the amplitude of our time series. We can quickly plot this function using the following block of code. 
-
+With x (time) defined in the 0-10 range, and y defined as the amplitude of our time series. We can quickly plot this function using the following block of code.
 
 ```python
 x = np.linspace(0,10,1000)
@@ -111,14 +109,13 @@ plt.ylabel('Amplitude')
 plt.title('Underlying Signal')
 ```
 
-The plot displays, in white, the underlying signal amplitude (on the y axis) with respect to time (on the x axis). 
+The plot displays, in white, the underlying signal amplitude (on the y axis) with respect to time (on the x axis).
 
-![png](/images/blog/Polynomial_Filtering/underlying_signal.svg)
+![png](/images/Polynomial_Filtering/underlying_signal.svg)
 
-Now, let's consider the noise to be a random gaussian noise (a noise sampled from a gaussian distribution), with mean = 0 and standard deviation = 0.3. 
+Now, let's consider the noise to be a random gaussian noise (a noise sampled from a gaussian distribution), with mean = 0 and standard deviation = 0.3.
 
 > More information about the Gaussian Noise definition can be found [here](https://www.geeksforgeeks.org/electronics-engineering/gaussian-noise/)
-
 
 ```python
 mean, std = 0, 0.3
@@ -130,12 +127,11 @@ plt.ylabel('Amplitude')
 plt.title('Noise')
 ```
 
-![png](/images/blog/Polynomial_Filtering/noise.svg)
+![png](/images/Polynomial_Filtering/noise.svg)
 
-A common assumption is that the measured signal is defined as the sum of the underlying signal and an unwanted (and unknown) level of noise. This kind of noise is known as **additive noise**. 
+A common assumption is that the measured signal is defined as the sum of the underlying signal and an unwanted (and unknown) level of noise. This kind of noise is known as **additive noise**.
 
-In the following graph, we can see the measured signal amplitude on the y axis with respect to time, on the x axis. 
-
+In the following graph, we can see the measured signal amplitude on the y axis with respect to time, on the x axis.
 
 ```python
 noisy_signal = y + noise_custom
@@ -145,19 +141,17 @@ plt.ylabel('Amplitude')
 plt.title('Measured signal')
 ```
 
-
-![png](/images/blog/Polynomial_Filtering/normal_noise.svg)
-
+![png](/images/Polynomial_Filtering/normal_noise.svg)
 
 ### Savitzky-Golay Filter Implementation
 
-The Savitzky-Golay implementation can be run in a single line of code thanks to the [scipy.signal.savgol_filter](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html) function. 
+The Savitzky-Golay implementation can be run in a single line of code thanks to the [scipy.signal.savgol_filter](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html) function.
 
 The function has three main arguments:
 
 1. **The signal we are aiming to denoise/clean**, as an array.
 2. **The window size**, as an integer number.
-3. **The order of our polynomial**, also as an integer number. 
+3. **The order of our polynomial**, also as an integer number.
 
 For example, cleaning the `noisy_signal`signal, applying a 3rd order polynomial on a 5 sized window can be done using the following line of code:
 
@@ -165,9 +159,7 @@ For example, cleaning the `noisy_signal`signal, applying a 3rd order polynomial 
 
 > Note: Some tuning can be done to find the optimal window length and polynomial order. In this article, a simple manual visual evaluation of multiple window lengths and polynomial sizes have been conducted, and the optimal one has been tested. In general, it is recommended not to exceed the 3-5 polynomial order and testing multiple window lengths to find the best one. A good read about a rigorous approach to find the optimal window length is [the following work](https://arxiv.org/pdf/1808.10489)
 
-In order to visually evaluate how our filter performs, a plot has been generated using the following code. 
-
-
+In order to visually evaluate how our filter performs, a plot has been generated using the following code.
 
 ```python
 filtered_signal = savgol_filter(noisy_signal, 5, 3)
@@ -199,16 +191,17 @@ plt.ylabel('Injected Noise')
 Here is a brief description of this plot:
 
 - **Top Plot**:
-    - Cyan Line: Represents the measured signal, which is the noisy observation of the underlying process.
 
-    - White Line: The Savitzky-Golay filtered signal, i.e., the measured signal after the denoising.
+  - Cyan Line: Represents the measured signal, which is the noisy observation of the underlying process.
+
+  - White Line: The Savitzky-Golay filtered signal, i.e., the measured signal after the denoising.
 
 - **Second Plot**: A zoomed in representation of the first plot
 
 - **Third Plot**: The difference between the filtered signal and the noisy signal is shown in white.
 
 - **Bottom Plot**: The actual noise that was artificially injected into the true signal to simulate a noisy real-world observation is shown in lime.
-![png](/images/blog/Polynomial_Filtering/Filtering_result.svg)
+  ![png](/images/Polynomial_Filtering/Filtering_result.svg)
 
 What we can notice is:
 
@@ -217,9 +210,9 @@ What we can notice is:
 
 ## Forecasting on Cleaned Signal
 
-In time series, cleaning the signal should really be in the preprocessing steps for any Machine Learning task. This is because, most of the times, we are interested in forecasting the underlying signal, and not the random variation that we see in the measured one. 
+In time series, cleaning the signal should really be in the preprocessing steps for any Machine Learning task. This is because, most of the times, we are interested in forecasting the underlying signal, and not the random variation that we see in the measured one.
 
-In order to show this we will use the Nixtla Forecasting algorithm [TimeGPT-1](https://www.nixtla.io/docs/introduction/introduction) and we will test it on the measured signal and on the measured signal after the application of the Savitzky-Golay filter. 
+In order to show this we will use the Nixtla Forecasting algorithm [TimeGPT-1](https://www.nixtla.io/docs/introduction/introduction) and we will test it on the measured signal and on the measured signal after the application of the Savitzky-Golay filter.
 
 ### Define your NixtlaClient
 
@@ -295,25 +288,22 @@ plt.savefig('images/TimeGPT_Prediction_vs_noisy.svg')
 plt.tight_layout()
 ```
 
-
 A brief description of the plot is shown below:
 
-- The top subplot shows the full time series of the underlying signal (in green), the TimeGPT forecast (in cyan) applied on the **Savitzky-Golay filtered signal**, and the TimeGPT forecast applied on the noisy input (real) signal. 
-- The bottom subplot shows a zoomed in version of the top subplot. 
+- The top subplot shows the full time series of the underlying signal (in green), the TimeGPT forecast (in cyan) applied on the **Savitzky-Golay filtered signal**, and the TimeGPT forecast applied on the noisy input (real) signal.
+- The bottom subplot shows a zoomed in version of the top subplot.
 
+![png](/images/Polynomial_Filtering/TimeGPT_Prediction_vs_noisy.svg)
 
-![png](/images/blog/Polynomial_Filtering/TimeGPT_Prediction_vs_noisy.svg)
-
-
-As we can see, the cyan predictions, on the cleaned input, are much more in line with the green signal. This is because the cyan predictions are generated on a preprocessed cleaned signal, while the white predictions are generated on a noisy non cleaned input one. 
+As we can see, the cyan predictions, on the cleaned input, are much more in line with the green signal. This is because the cyan predictions are generated on a preprocessed cleaned signal, while the white predictions are generated on a noisy non cleaned input one.
 
 ## Conclusions
 Let's summarize the topics treated in the blogposts:
 
-* Measured time series are usually noisy and noise can impact your Machine Learning downstream tasks (e.g. in forecasting, anomaly detection, or classification)
+- Measured time series are usually noisy and noise can impact your Machine Learning downstream tasks (e.g. in forecasting, anomaly detection, or classification)
 
-* Savitzky–Golay filtering has been applied as a smoothing technique to smooth the measured signal and remove its noise. The idea of the filter is to fit a local polynomial over a sliding window.
+- Savitzky–Golay filtering has been applied as a smoothing technique to smooth the measured signal and remove its noise. The idea of the filter is to fit a local polynomial over a sliding window.
 
-* Implementation is straightforward. With scipy.signal.savgol_filter, only the window length and polynomial degree need to be tuned.
+- Implementation is straightforward. With scipy.signal.savgol_filter, only the window length and polynomial degree need to be tuned.
 
-* Filtering improves model performance. In the example, TimeGPT forecasts on the denoised signal were closer to the true underlying signal than forecasts on noisy data.
+- Filtering improves model performance. In the example, TimeGPT forecasts on the denoised signal were closer to the true underlying signal than forecasts on noisy data.

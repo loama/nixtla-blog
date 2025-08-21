@@ -2,8 +2,15 @@
 title: "Production-Ready Forecasting Pipeline with TimeGPT and Polars"
 description: "Learn how TimeGPT's native DataFrame compatibility lets you leverage Polars' blazing-fast performance for time series forecasting without data conversion overhead."
 categories: ["Time Series Forecasting"]
-tags: ["TimeGPT", "Polars", "zero-shot forecasting", "DataFrame libraries", "scalable forecasting"]
-image: '/images/blog/production-ready-forecasting-pipeline-with-timegpt-and-polars/featured_image.png'
+tags:
+  [
+    "TimeGPT",
+    "Polars",
+    "zero-shot forecasting",
+    "DataFrame libraries",
+    "scalable forecasting",
+  ]
+image: "/images/production-ready-forecasting-pipeline-with-timegpt-and-polars/featured_image.png"
 ---
 
 # TimeGPT + Polars: Production-Ready Forecasting Pipeline
@@ -17,6 +24,7 @@ Have you ever hit memory limits while working with time series data? pandas Data
 [TimeGPT](https://www.nixtla.io) is a foundation model for time series that provides zero-shot forecasting capabilities. Unlike traditional models that require training on your specific data, TimeGPT comes pre-trained on millions of time series patterns and generates predictions instantly through API calls.
 
 The key differentiator is its universal DataFrame support. While most forecasting libraries force you into pandas, TimeGPT works natively with:
+
 - Pandas DataFrames for compatibility
 - Polars DataFrames for speed and memory efficiency
 - Spark DataFrames for distributed computing
@@ -232,7 +240,6 @@ nixtla_client = NixtlaClient(
 )
 ```
 
-
 TimeGPT's `forecast()` method accepts Polars DataFrames directly. Key parameters: `h` for forecast horizon, `freq` for data frequency, `time_col` and `target_col` to specify column names.
 
 ```python
@@ -275,17 +282,18 @@ TimeGPT's built-in plotting functionality makes it easy to visualize both histor
 ```python
 # Plot the forecast with historical data
 nixtla_client.plot(
-    df=demo_long, 
-    forecasts_df=forecast_df, 
-    time_col='ds', 
+    df=demo_long,
+    forecasts_df=forecast_df,
+    time_col='ds',
     target_col='y',
     max_insample_length=100  # Show last 100 historical points
 )
 ```
 
-![Forecast with historical data](/images/blog/production-ready-forecasting-pipeline-with-timegpt-and-polars/simple_plot.svg)
+![Forecast with historical data](/images/production-ready-forecasting-pipeline-with-timegpt-and-polars/simple_plot.svg)
 
 The plot shows 8 different time series (H314, H188, H355, H390, H406, H414, H277, H76) with clear patterns:
+
 - **Historical data** appears in cyan lines showing various seasonal and trend patterns
 - **Forecasts** extend into the future (bright green lines) with different prediction patterns for each series
 - **Time series separation** displays each `unique_id` in its own subplot for easy comparison
@@ -360,9 +368,10 @@ nixtla_client.plot(
 )
 ```
 
-![Forecast with confidence intervals](/images/blog/production-ready-forecasting-pipeline-with-timegpt-and-polars/plot_with_interval.svg)
+![Forecast with confidence intervals](/images/production-ready-forecasting-pipeline-with-timegpt-and-polars/plot_with_interval.svg)
 
 The plot reveals key insights about forecast uncertainty:
+
 - **Confidence bands**: The subtle green shaded areas represent 80% (darker) and 95% (lighter) prediction intervals
 - **Variable uncertainty**: Series like H360 and H38 show wider bands indicating higher volatility
 - **Stable patterns**: H188 and H277 display tighter intervals, suggesting more predictable behavior
@@ -406,6 +415,7 @@ Output:
 ```
 
 The results include:
+
 - `cutoff`: The point where training data ends for each validation window
 - `y`: Actual observed values
 - `TimeGPT`: Forecasted values
@@ -450,10 +460,10 @@ shape: (10, 3)
 ```
 
 The results show clear performance differences across series:
+
 - **Top performers**: H188 (MAE: 0.08) and H277 (MAE: 0.13) achieve excellent accuracy
 - **Challenging series**: H38 and H76 show higher errors, indicating complex seasonal patterns
 - **Performance range**: MAE varies from 0.08 to 164, demonstrating TimeGPT adapts to different data characteristics
-
 
 ## Next Steps
 

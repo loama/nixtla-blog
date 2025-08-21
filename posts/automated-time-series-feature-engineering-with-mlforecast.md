@@ -2,8 +2,14 @@
 title: "Automated Time Series Feature Engineering with MLforecast"
 description: "Replace hours of custom feature engineering code with MLforecast's automated lag features, rolling statistics, and target transformations for faster, more reliable time series forecasting."
 categories: ["Time Series Forecasting"]
-tags: ["MLforecast", "automated feature engineering", "lag features", "target transformations"]
-image: '/images/blog/automated-time-series-feature-engineering-with-mlforecast/automated-feature-engineering-rolling-expanding-comparison.svg'
+tags:
+  [
+    "MLforecast",
+    "automated feature engineering",
+    "lag features",
+    "target transformations",
+  ]
+image: "/images/automated-time-series-feature-engineering-with-mlforecast/automated-feature-engineering-rolling-expanding-comparison.svg"
 ---
 
 # Automated Time Series Feature Engineering with MLforecast
@@ -11,6 +17,7 @@ image: '/images/blog/automated-time-series-feature-engineering-with-mlforecast/a
 Building effective time series models requires creating dozens of engineered features: lag values from previous periods, rolling averages over different windows, seasonal indicators, and [target transformations](https://nixtlaverse.nixtla.io/mlforecast/target_transforms.html). The traditional approach involves writing hundreds of lines of custom [pandas](https://pandas.pydata.org/) code, handling edge cases manually, and maintaining separate pipelines for each use case.
 
 This manual process creates several problems:
+
 - **Time consuming**: 1-2 hours per model just for feature creation
 - **Error prone**: Missing values, incorrect window calculations, transformation reversals
 - **Inconsistent**: Different feature implementations across models and teams
@@ -88,14 +95,13 @@ sales_data.head()
 Dataset shape: (2046, 3)
 ```
 
-| unique_id  | ds         | y          |
-|------------|------------|------------|
-| product_1  | 2023-01-01 | 149.967142 |
-| product_1  | 2023-01-02 | 194.064742 |
-| product_1  | 2023-01-03 | 156.073594 |
-| product_1  | 2023-01-04 | 169.276074 |
-| product_1  | 2023-01-05 | 135.228628 |
-
+| unique_id | ds         | y          |
+| --------- | ---------- | ---------- |
+| product_1 | 2023-01-01 | 149.967142 |
+| product_1 | 2023-01-02 | 194.064742 |
+| product_1 | 2023-01-03 | 156.073594 |
+| product_1 | 2023-01-04 | 169.276074 |
+| product_1 | 2023-01-05 | 135.228628 |
 
 Now let's configure MLforecast with basic automated features:
 
@@ -198,6 +204,7 @@ Beyond basic lag values, MLforecast can apply [lag transformations](https://nixt
 Lag transforms work in two steps:
 
 1. Create raw historical values with `lags=[1, 7, 14]`
+
    - `lag1` = yesterday's exact sales (150 units)
    - `lag7` = last week's exact sales (120 units)
 
@@ -274,13 +281,13 @@ ax.legend()
 plt.show()
 ```
 
-![Rolling vs Expanding Mean Patterns](/images/blog/stop-manual-feature-engineering-mlforecast/rolling-vs-expanding-patterns.svg)
+![Rolling vs Expanding Mean Patterns](/images/stop-manual-feature-engineering-mlforecast/rolling-vs-expanding-patterns.svg)
 
 The visualization shows how each transform reveals different patterns:
+
 - **Original sales** (white): Shows all daily fluctuations and noise
 - **7-day rolling mean** (cyan): Smooths short-term volatility while following trends closely
 - **Expanding mean** (lime): Reveals long-term directional changes, less responsive to recent spikes
-
 
 ## Target Transformations - Automatic Preprocessing and Postprocessing
 
@@ -333,7 +340,6 @@ Transformed features for product_1:
 
 The `target_transforms=[Differences([1])]` transforms the `y` column in-place, converting raw sales values into differences. Notice how the `y` values are now small positive/negative changes rather than the original 100-200 range sales figures.
 
-
 ## Cross-Validation for Time Series - Proper Model Evaluation
 
 Standard cross-validation uses random data splits, creating data leakage by training on future data:
@@ -350,7 +356,7 @@ MLforecast's [`cross_validation()` method](https://nixtlaverse.nixtla.io/mlforec
 The parameters control the validation setup:
 
 - `n_windows=3`: Creates 3 separate validation periods
-- `h=7`: Forecasts 7 days ahead for each window  
+- `h=7`: Forecasts 7 days ahead for each window
 - `step_size=7`: Moves each window forward by 7 days
 
 Let's set up time series cross-validation with a simplified model:
@@ -429,8 +435,6 @@ MAE by product and validation window:
 The MAE values show consistent performance across different validation windows, with errors around 12-25 units. This indicates the model generalizes well across time periods rather than overfitting to specific patterns.
 
 > Once you've mastered automated feature engineering, apply similar time series techniques to [anomaly detection workflows](https://nixtla.github.io/web/blog/anomaly_detection) for comprehensive data monitoring.
-
-
 
 ## Complete Automated Workflow - End-to-End Pipeline Without Manual Features
 
@@ -520,7 +524,7 @@ ax.legend()
 plt.show()
 ```
 
-![MLforecast Predictions vs Actual Sales](/images/blog/stop-manual-feature-engineering-mlforecast/automated-predictions-vs-actual.svg)
+![MLforecast Predictions vs Actual Sales](/images/stop-manual-feature-engineering-mlforecast/automated-predictions-vs-actual.svg)
 
 The visualization shows how MLforecast's automated predictions align with actual sales patterns. The model successfully captures trends and seasonality using only the automatically generated features.
 
@@ -561,7 +565,7 @@ The rolling mean transformations dominate the top features, with `rolling_mean_l
 MLforecast eliminates the manual feature engineering bottleneck in time series forecasting. By replacing hundreds of lines of custom code with simple declarative configuration, you get:
 
 - **80% time reduction** in feature engineering
-- **Consistent features** across all models and environments  
+- **Consistent features** across all models and environments
 - **Automatic handling** of edge cases and missing values
 - **Built-in optimizations** for performance and reliability
 

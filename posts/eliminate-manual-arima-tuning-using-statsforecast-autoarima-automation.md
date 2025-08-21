@@ -2,8 +2,15 @@
 title: "Eliminate Manual ARIMA Tuning Using StatsForecast AutoARIMA Automation"
 description: "Eliminate weeks of manual ARIMA parameter tuning with StatsForecast's AutoARIMA. Automatically select optimal model parameters for 50+ time series with confidence intervals in under 30 minutes."
 categories: ["Time Series Forecasting"]
-tags: ["StatsForecast", "AutoARIMA", "automatic model selection", "ARIMA parameters", "prediction intervals"]
-image: '/images/blog/eliminate-manual-arima-tuning-using-statsforecast-autoarima-automation/autoarima-forecast-confidence-intervals-featured-image.svg'
+tags:
+  [
+    "StatsForecast",
+    "AutoARIMA",
+    "automatic model selection",
+    "ARIMA parameters",
+    "prediction intervals",
+  ]
+image: "/images/eliminate-manual-arima-tuning-using-statsforecast-autoarima-automation/autoarima-forecast-confidence-intervals-featured-image.svg"
 ---
 
 # Scale Time Series Forecasting: Replace Manual Parameter Testing with AutoARIMA
@@ -59,7 +66,7 @@ View the code to create the dataset in the [source code](https://github.com/Nixt
 Here is a sample of the dataset:
 
 | unique_id   | ds         | y            |
-|-------------|------------|--------------|
+| ----------- | ---------- | ------------ |
 | electronics | 2020-01-01 | 62980.284918 |
 | electronics | 2020-02-01 | 65936.371640 |
 | electronics | 2020-03-01 | 75810.350968 |
@@ -215,7 +222,7 @@ Forecast shape: (35, 5)
 ```
 
 | unique_id | ds         | AutoARIMA    | AutoETS      | SeasonalNaive |
-|-----------|------------|--------------|--------------|---------------|
+| --------- | ---------- | ------------ | ------------ | ------------- |
 | books     | 2023-04-01 | 60523.191642 | 55534.897267 | 54350.389275  |
 | books     | 2023-05-01 | 61275.648592 | 55534.897267 | 61674.121108  |
 | books     | 2023-06-01 | 59179.501052 | 55534.897267 | 44922.018634  |
@@ -267,13 +274,13 @@ sample_forecast = forecasts_with_intervals[
 sample_forecast[["ds", "AutoARIMA", "AutoARIMA-lo-95", "AutoARIMA-hi-95"]]
 ```
 
-| ds         | AutoARIMA    | AutoARIMA-lo-95  | AutoARIMA-hi-95  |
-|------------|--------------|------------------|------------------|
-| 2023-04-01 | 99350.422989 | 87049.266213     | 111651.579766    |
-| 2023-05-01 | 94747.079991 | 82445.923214     | 107048.236767    |
-| 2023-06-01 | 97033.851200 | 84732.694424     | 109335.007977    |
-| 2023-07-01 | 86302.421665 | 74001.264889     | 98603.578442     |
-| 2023-08-01 | 83997.249910 | 71696.093133     | 96298.406686     |
+| ds         | AutoARIMA    | AutoARIMA-lo-95 | AutoARIMA-hi-95 |
+| ---------- | ------------ | --------------- | --------------- |
+| 2023-04-01 | 99350.422989 | 87049.266213    | 111651.579766   |
+| 2023-05-01 | 94747.079991 | 82445.923214    | 107048.236767   |
+| 2023-06-01 | 97033.851200 | 84732.694424    | 109335.007977   |
+| 2023-07-01 | 86302.421665 | 74001.264889    | 98603.578442    |
+| 2023-08-01 | 83997.249910 | 71696.093133    | 96298.406686    |
 
 Visualize predictions with uncertainty bands:
 
@@ -283,18 +290,18 @@ def plot_forecasts_with_intervals(category_name):
     # Get data
     historical = train_data[train_data["unique_id"] == category_name].tail(24)
     forecast = forecasts_with_intervals[forecasts_with_intervals["unique_id"] == category_name]
-    
+
     # Create plot
     plt.figure(figsize=(12, 6))
-    
+
     # Plot data
     plt.plot(historical["ds"], historical["y"], label="Historical Sales")
     plt.plot(forecast["ds"], forecast["AutoARIMA"], label="AutoARIMA Forecast")
-    plt.fill_between(forecast["ds"], forecast["AutoARIMA-lo-95"], forecast["AutoARIMA-hi-95"], 
+    plt.fill_between(forecast["ds"], forecast["AutoARIMA-lo-95"], forecast["AutoARIMA-hi-95"],
                      alpha=0.2, label="95% Confidence")
-    plt.fill_between(forecast["ds"], forecast["AutoARIMA-lo-80"], forecast["AutoARIMA-hi-80"], 
+    plt.fill_between(forecast["ds"], forecast["AutoARIMA-lo-80"], forecast["AutoARIMA-hi-80"],
                      alpha=0.3, label="80% Confidence")
-    
+
     # Labels and legend
     plt.title(f"{category_name.title()} Sales Forecast with Confidence Intervals")
     plt.ylabel("Sales ($)")
@@ -306,7 +313,7 @@ def plot_forecasts_with_intervals(category_name):
 plot_forecasts_with_intervals("electronics")
 ```
 
-![autoarima-forecast-confidence-intervals](/images/blog/eliminate-manual-arima-tuning-using-statsforecast-autoarima-automation/autoarima-forecast-confidence-intervals.svg)
+![autoarima-forecast-confidence-intervals](/images/eliminate-manual-arima-tuning-using-statsforecast-autoarima-automation/autoarima-forecast-confidence-intervals.svg)
 
 The electronics forecast captures seasonal patterns with confidence intervals that widen over time, reflecting increasing uncertainty in longer-term predictions. AutoARIMA successfully identifies the cyclical sales patterns while providing realistic uncertainty bounds for inventory planning decisions.
 
@@ -334,7 +341,7 @@ Cross-validation results shape: (120, 5)
 ```
 
 | unique_id | ds         | cutoff     | y            | AutoARIMA    |
-|-----------|------------|------------|--------------|--------------|
+| --------- | ---------- | ---------- | ------------ | ------------ |
 | books     | 2022-01-01 | 2021-12-01 | 43018.516004 | 43226.769208 |
 | books     | 2022-02-01 | 2021-12-01 | 48841.347642 | 42457.344848 |
 | books     | 2022-03-01 | 2021-12-01 | 50980.426686 | 41966.543477 |

@@ -1,7 +1,7 @@
 ---
 title: "TimeGPT vs Snowflake - 50x Faster Forecasting with Better Accuracy"
 description: Discover SQL-native time series forecasting for Snowflake that's 10x faster than native tools. Nixtla provides state-of-the-art accuracy without Python, ML infrastructure, or complex setup.
-image: /images/blog/timegpt_in_snowflake/performance_accuracy_quadrant.svg
+image: /images/timegpt_in_snowflake/performance_accuracy_quadrant.svg
 categories: ["Time Series Forecasting"]
 tags: ["TimeGPT", "Snowflake", "SQL forecasting", "performance comparison"]
 ---
@@ -27,7 +27,7 @@ Even when implemented, Snowflake's default forecasting tends to be slow, the syn
 Key features:
 
 - **Fully SQL-based**: no Python, notebooks, or ML infrastructure required.
-- **API-based or self-hosted**: run Nixtla from outside or *inside* your Snowflake instance.
+- **API-based or self-hosted**: run Nixtla from outside or _inside_ your Snowflake instance.
 - **Fast, accurate forecasts**: purpose-built models for time series data.
 
 ## The Nixtla Forecasting Suite
@@ -133,10 +133,10 @@ Generate a 28-step forecast using the 'sf_best' model and store the result:
 
 ```sql
 CREATE OR REPLACE TEMP TABLE sf_best_forecast AS
-SELECT 
-    TRIM(SERIES, '"') AS unique_id, 
-    ts AS ds, 
-    forecast 
+SELECT
+    TRIM(SERIES, '"') AS unique_id,
+    ts AS ds,
+    forecast
 FROM TABLE(sf_best!FORECAST(FORECASTING_PERIODS => 28));
 ```
 
@@ -321,6 +321,7 @@ INNER JOIN sf_fast_forecast USING (unique_id, ds);
 ```
 
 Evaluate MAPE (Mean Absolute Percentage Error) for all forecast methods and aggregate the results:
+
 ```sql
 SELECT
     forecaster,
@@ -331,20 +332,18 @@ GROUP BY 1, 2
 ORDER BY 2, 3;
 ```
 
-
 **Forecast Accuracy**
 
 The table below shows the MAPE for all forecast methods. Lower MAPE values indicate better forecasting performance.
 
-
-| Model            |  MAPE     |
-| -------------------- | ----- |
+| Model                 | MAPE  |
+| --------------------- | ----- |
 | TimeGPT LH: Finetuned | 0.078 |
 | TimeGPT LH: 0 Shot    | 0.089 |
-| Snowflake Best       | 0.091 |
-| Snowflake Fast       | 0.099 |
+| Snowflake Best        | 0.091 |
+| Snowflake Fast        | 0.099 |
 
-![forecast_accuracy_mape_by_model](/images/blog/timegpt_in_snowflake/forecast_accuracy_mape_by_model.svg)
+![forecast_accuracy_mape_by_model](/images/timegpt_in_snowflake/forecast_accuracy_mape_by_model.svg)
 
 We can see that:
 
@@ -358,14 +357,14 @@ We can see that:
 
 We also measured how long each method took to train and forecast across 10 time series.
 
-| Model | Time (sec) |
-| -------------------- | ----- |
-| TimeGPT LH: Finetuned | 26 |
-| TimeGPT LH: 0 Shot | 19 |
-| Snowflake Best | 2499 |
-| Snowflake Fast | 1340 |
+| Model                 | Time (sec) |
+| --------------------- | ---------- |
+| TimeGPT LH: Finetuned | 26         |
+| TimeGPT LH: 0 Shot    | 19         |
+| Snowflake Best        | 2499       |
+| Snowflake Fast        | 1340       |
 
-![runtime_performance_by_model](/images/blog/timegpt_in_snowflake/runtime_performance_by_model.svg)
+![runtime_performance_by_model](/images/timegpt_in_snowflake/runtime_performance_by_model.svg)
 
 The table shows that:
 
@@ -381,8 +380,7 @@ As data volume increases, these performance differences compound, making Nixtla 
 
 The following quadrant chart maps each model's position across the two critical dimensions: execution time and forecast accuracy. This visualization clearly demonstrates TimeGPT's superiority in both metrics.
 
-![Performance vs Accuracy Quadrant](/images/blog/timegpt_in_snowflake/performance_accuracy_quadrant.svg)
-
+![Performance vs Accuracy Quadrant](/images/timegpt_in_snowflake/performance_accuracy_quadrant.svg)
 
 ## Final Thoughts
 

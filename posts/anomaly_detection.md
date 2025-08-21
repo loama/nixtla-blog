@@ -1,19 +1,18 @@
 ---
-title: 'Anomaly Detection in Time Series with TimeGPT and Python'
+title: "Anomaly Detection in Time Series with TimeGPT and Python"
 description: |
   Discover how to use TimeGPT for scalable, accurate anomaly detection in Python. 
   Includes real-world time series, exogenous variables, and adjustable confidence levels.
-image: '/images/blog/anomaly_detection/anomaly_detection.svg'
+image: "/images/anomaly_detection/anomaly_detection.svg"
 categories: ["Anomaly Detection"]
 tags: ["TimeGPT", "Python", "anomaly detection", "confidence intervals"]
-
 ---
 
 # Anomaly Detection in Time Series with TimeGPT
 
 Imagine you're tracking daily website traffic. Some days show spikes in visits, but it's hard to tell which ones reflect real behavioral changes versus normal fluctuations. Manually spotting anomalies is time-consuming, unreliable, and impractical as your traffic data becomes more complex.
 
-![](/images/blog/anomaly_detection/daily_website_traffic.svg)
+![](/images/anomaly_detection/daily_website_traffic.svg)
 
 This is where anomaly detection becomes essential. Instead of relying on manual inspection or guesswork, a model like TimeGPT provides consistent, automated detection of unusual behavior based on the page's historical trends and known patterns.
 
@@ -79,14 +78,13 @@ Output
 | 0         | 2007-12-18T00:00:00 | 8.382518288 |
 | 0         | 2007-12-19T00:00:00 | 8.069655307 |
 
-
 Visualize the time series using the `plot` method:
 
 ```python
 nixtla_client.plot(wikipedia)
 ```
 
-![](/images/blog/anomaly_detection/wikipedia_plot.svg)
+![](/images/anomaly_detection/wikipedia_plot.svg)
 
 The time series spans several years and shows clear seasonal spikes—likely tied to NFL events—alongside irregular, sharp peaks. These mixed patterns make it hard to judge by eye which spikes are expected and which are truly unusual, making TimeGPT essential for accurate anomaly detection.
 
@@ -111,7 +109,6 @@ anomalies_df.head()
 | 0         | 2008-01-13T00:00:00 | 9.9965224185  | 8.917259 | 10.196658     | 7.637861      | false   |
 | 0         | 2008-01-14T00:00:00 | 10.1270710071 | 9.002326 | 10.281725     | 7.7229276     | false   |
 
-
 In this table:
 
 - The **anomaly** column shows whether each data point is considered unusual.
@@ -124,7 +121,7 @@ Plot the anomalies using the `plot` method:
 nixtla_client.plot(wikipedia, anomalies_df)
 ```
 
-![](/images/blog/anomaly_detection/anomaly_plot.svg)
+![](/images/anomaly_detection/anomaly_plot.svg)
 
 The plot reveals several key insights:
 
@@ -156,7 +153,7 @@ nixtla_client.weights_x.plot.barh(
 )
 ```
 
-![](/images/blog/anomaly_detection/feature_plot.svg)
+![](/images/anomaly_detection/feature_plot.svg)
 
 In this plot:
 
