@@ -20,11 +20,58 @@ export default function handler(req, res) {
     if (match) {
       const frontmatterRaw = match[1];
       content = match[2].trim();
-      frontmatterRaw.split("\n").forEach((line) => {
+      const lines = frontmatterRaw.split("\n");
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
         const m = line.match(/^([a-zA-Z0-9_\-]+):\s*(.*)$/);
         if (m) {
           let key = m[1].trim();
           let value = m[2].trim();
+          // Multiline array (YAML style)
+          if (value === "") {
+            // Check for indented lines (array items)
+            let arr = [];
+            i++;
+            while (i < lines.length && lines[i].match(/^\s+-\s*(.*)$/)) {
+              const item = lines[i].replace(/^\s+-\s*/, "").trim();
+              arr.push(item);
+              i++;
+            }
+            frontmatter[key] = arr;
+            continue; // skip i++ at end of loop
+          }
+          // Multiline JSON-style array
+          if (value.startsWith("[") && !value.endsWith("]")) {
+            let arrLines = [value];
+            i++;
+            while (i < lines.length) {
+              arrLines.push(lines[i]);
+              if (lines[i].includes("]")) break;
+              i++;
+            }
+            // Join all lines, remove newlines and extra spaces
+            let arrStr = arrLines
+              .join("")
+              .replace(/\s+/g, " ")
+              .replace(/,\s*\]/, "]")
+              .replace(/'/g, '"')
+              .trim();
+            try {
+              frontmatter[key] = JSON.parse(arrStr);
+            } catch {
+              // Fallback: extract quoted strings as array items
+              const matches = arrStr.match(/"(.*?)"/g);
+              if (matches) {
+                frontmatter[key] = matches.map((s) => s.replace(/"/g, ""));
+              } else {
+                frontmatter[key] = [];
+              }
+              // Optionally: console.log('Failed to parse array:', arrStr);
+            }
+            i++;
+            continue;
+          }
           // Remove quotes if present
           if (
             (value.startsWith('"') && value.endsWith('"')) ||
@@ -40,7 +87,8 @@ export default function handler(req, res) {
           }
           frontmatter[key] = value;
         }
-      });
+        i++;
+      }
     }
     return {
       title: frontmatter.title || null,

@@ -3,13 +3,11 @@ title: "Production-Ready Forecasting Pipeline with TimeGPT and Polars"
 description: "Learn how TimeGPT's native DataFrame compatibility lets you leverage Polars' blazing-fast performance for time series forecasting without data conversion overhead."
 categories: ["Time Series Forecasting"]
 tags:
-  [
-    "TimeGPT",
-    "Polars",
-    "zero-shot forecasting",
-    "DataFrame libraries",
-    "scalable forecasting",
-  ]
+  - TimeGPT
+  - Polars
+  - zero-shot forecasting
+  - DataFrame libraries
+  - scalable forecasting
 image: "/images/production-ready-forecasting-pipeline-with-timegpt-and-polars/featured_image.png"
 ---
 

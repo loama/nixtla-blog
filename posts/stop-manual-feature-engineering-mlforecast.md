@@ -3,12 +3,10 @@ title: "Automated Time Series Feature Engineering with MLforecast"
 description: "Replace hours of custom feature engineering code with MLforecast's automated lag features, rolling statistics, and target transformations for faster, more reliable time series forecasting."
 categories: ["Time Series Forecasting"]
 tags:
-  [
-    "MLforecast",
-    "automated feature engineering",
-    "lag features",
-    "target transformations",
-  ]
+  - MLforecast
+  - automated feature engineering
+  - lag features
+  - target transformations
 image: "/images/stop-manual-feature-engineering-mlforecast/automated-feature-engineering-rolling-expanding-comparison.svg"
 ---
 

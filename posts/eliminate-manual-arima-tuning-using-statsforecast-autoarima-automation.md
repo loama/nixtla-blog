@@ -3,13 +3,11 @@ title: "Eliminate Manual ARIMA Tuning Using StatsForecast AutoARIMA Automation"
 description: "Eliminate weeks of manual ARIMA parameter tuning with StatsForecast's AutoARIMA. Automatically select optimal model parameters for 50+ time series with confidence intervals in under 30 minutes."
 categories: ["Time Series Forecasting"]
 tags:
-  [
-    "StatsForecast",
-    "AutoARIMA",
-    "automatic model selection",
-    "ARIMA parameters",
-    "prediction intervals",
-  ]
+  - StatsForecast
+  - AutoARIMA
+  - automatic model selection
+  - ARIMA parameters
+  - prediction intervals
 image: "/images/eliminate-manual-arima-tuning-using-statsforecast-autoarima-automation/autoarima-forecast-confidence-intervals-featured-image.svg"
 ---
 

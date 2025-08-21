@@ -4,7 +4,10 @@ description: "Understand what are baseline forecasts, why they are important and
 image: "/images/baseline_forecasts/forecast_featured.png"
 categories: ["Time Series Forecasting"]
 tags:
-  ["baseline forecasting", "statsforecast", "naive forecast", "seasonal naive"]
+  - baseline forecasting
+  - statsforecast
+  - naive forecast
+  - seasonal naive
 ---
 
 # Effortless Accuracy: Unlocking the Power of Baseline Forecasts
